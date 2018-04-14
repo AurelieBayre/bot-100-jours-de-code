@@ -1,0 +1,28 @@
+{
+  "name": "bot-100-jours-de-code",
+  "version": "1.0.0",
+  "description": "Bot qui relaie les tweets des participants aux #100JoursDeCode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AurelieBayre/bot-100-jours-de-code.git"
+  },
+  "keywords": [
+    "bot",
+    "twitter",
+    "#100JoursDeCode",
+    "#100joursdecode",
+    "JavaScript",
+    "Nodejs",
+    "retweet"
+  ],
+  "author": "Aurelie Bayre et Pierre Dumay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AurelieBayre/bot-100-jours-de-code/issues"
+  },
+  "homepage": "https://github.com/AurelieBayre/bot-100-jours-de-code#readme"
+}
