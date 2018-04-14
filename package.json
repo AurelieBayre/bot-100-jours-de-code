@@ -4,7 +4,8 @@
   "description": "Bot qui relaie les tweets des participants aux #100JoursDeCode",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,7 @@
     "retweet"
   ],
   "author": "Aurelie Bayre et Pierre Dumay",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AurelieBayre/bot-100-jours-de-code/issues"
   },
