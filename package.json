@@ -5,7 +5,7 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "Nodejs",
     "retweet"
   ],
-  "author": "Aurelie Bayre et Pierre Dumay",
+  "author": "Aurelie Bayre",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AurelieBayre/bot-100-jours-de-code/issues"
