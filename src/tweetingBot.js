@@ -3,70 +3,67 @@ const config = require('./config')
 
 const bot = new Twit(config)
 
-const retweet = require('./api/retweet')
-
 const isReply = require('./helpers/isReply')
 
-let tweets = []
 
-const addTweetToQueue = e => {
-  if (isReply(e)) {
-
-    console.log('====================')
-    // eslint-disable-next-line no-console
-    console.log(`=IS REPLY RETURNING=`)
-  
-    console.log('====================')
-    return
+bot.get(
+  'followers/list',
+  {
+    screen_name: '100joursdecode',
+    count: 200
+  },
+  (err, data, response) => {
+    if (err) {
+      console.log(err)
+    } else {
+      data.users.forEach(user => {
+        console.log(user.screen_name)
+      })
+    }
   }
-  /*
-   as the bot wants to retweet to the French-speking community,
-   and we don't want to overload the English-speaking community 
-   with French content, we exclude tweets that target #100daysOfCode.
-  */
+)
 
-  if (!e.text.contains('#100DaysOfCode')) {
-    tweets.push({
-      tweet: e.text,
-      tweetId: e.id_str,
-      user: e.user.screen_name,
-      event: e
-    })
-    console.log(`Tweet ajouté à la file, longueur actuelle = ${tweets.length}`)
-  }
+const retweetRecent = () => {
+
+
+  bot.get(
+    'search/tweets',
+    {
+      q: '#100JoursDeCode -#100DaysOfCode -#100daysofcode',
+      result_type: 'recent'
+    },
+    (err, data) => {
+      if (!err) {
+        const recentTweets = data.statuses
+        recentTweets.forEach(tweet => {
+          if (isReply(tweet)) {
+            console.log(`c'est une réponse, on ne retweete pas.`)
+            return
+          }else {
+            bot.post(
+              'statuses/retweet/:id',
+              {
+                id: tweet.id_str
+              },
+              (err, response) => {
+                if (response) {
+                  console.log('Retweet réussi :)')
+                }
+                if (err) {
+                  console.log('Le retweet a échoué! :(')
+                }
+              }
+            )
+          }
+        })
+      }
+      else {
+        console.log('La recherche a échoué! :(')
+      }
+    }
+  )  
 }
 
+retweetRecent()
 
-/*
-bot.post('statuses/update', {
-  status: "Hello World!"
-}, (err, data, response) => {
-  if (err) {
-    console.log(err)
-  }else{
-    console.log(`${data.text} tweeted!`)
-  }
-})
-*/
-
-bot.get('followers/list', {
-  screen_name: '100joursdecode',
-  count: 200
-}, (err, data, response) => {
-  if (err) {
-    console.log(err)
-  } else {
-    data.users.forEach(user => {
-      console.log(user.screen_name)
-    })
-  }
-})
-
-const stream = bot.stream('statuses/filter', 
-{track: '100joursdecode, 100JoursDeCode, 100DaysOfCode'})
-
-stream.on('tweet', function (tweet) {
-  console.log(tweet)
-})
-
-stream.on('tweet', addTweetToQueue)
+setInterval(retweetRecent, 3000000)
