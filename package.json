@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/AurelieBayre/bot-100-jours-de-code#readme",
   "dependencies": {
-    "dotenv": "^5.0.1",
     "twit": "^2.2.9"
   }
 }
