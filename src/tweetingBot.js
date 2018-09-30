@@ -11,7 +11,7 @@ let tweets = []
 
 const addTweetToQueue = e => {
   if (isReply(e)) {
-    // eslint-disable-next-line no-console
+
     console.log('====================')
     // eslint-disable-next-line no-console
     console.log(`=IS REPLY RETURNING=`)
@@ -19,18 +19,24 @@ const addTweetToQueue = e => {
     console.log('====================')
     return
   }
-  tweets.push({
-    tweet: e.text,
-    tweetId: e.id_str,
-    user: e.user.screen_name,
-    timeIn: new Date(newTimeIn()),
-    timeOut: new Date(newTimeOut()),
-    event: e // EVERYTHING!!!
-  })
-  console.log(`Item added to queue, current length=${tweets.length}`)
+  /*
+   as the bot wants to retweet to the French-speking community,
+   and we don't want to overload the English-speaking community 
+   with French content, we exclude tweets that target #100daysOfCode.
+  */
+
+  if (!e.text.contains('#100DaysOfCode')) {
+    tweets.push({
+      tweet: e.text,
+      tweetId: e.id_str,
+      user: e.user.screen_name,
+      event: e
+    })
+    console.log(`Tweet ajouté à la file, longueur actuelle = ${tweets.length}`)
+  }
 }
 
-console.log('tweetlist: ', tweets)
+
 /*
 bot.post('statuses/update', {
   status: "Hello World!"
@@ -55,3 +61,12 @@ bot.get('followers/list', {
     })
   }
 })
+
+const stream = bot.stream('statuses/filter', 
+{track: '100joursdecode, 100JoursDeCode, 100DaysOfCode'})
+
+stream.on('tweet', function (tweet) {
+  console.log(tweet)
+})
+
+stream.on('tweet', addTweetToQueue)
