@@ -24,8 +24,6 @@ bot.get(
 )
 
 const retweetRecent = () => {
-
-
   bot.get(
     'search/tweets',
     {

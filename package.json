@@ -28,6 +28,6 @@
   "homepage": "https://github.com/AurelieBayre/bot-100-jours-de-code#readme",
   "dependencies": {
     "npm": "^6.4.1",
-    "twit": "^2.2.9"
+    "twit": "^2.2.11"
   }
 }
